@@ -8,6 +8,8 @@ fastapi = {extras = ["standard"], version = "*"}
 cuid = "*"
 
 [dev-packages]
+pytest = "*"
+httpx = "*"
 
 [requires]
 python_version = "3.12"
