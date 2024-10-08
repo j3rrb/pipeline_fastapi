@@ -1,4 +1,3 @@
-from src.app import app  # Importa a sua aplicação FastAPI
+from src.app import app  
 
-# Expõe a aplicação FastAPI como "application"
 application = app
