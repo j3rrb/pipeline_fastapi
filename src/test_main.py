@@ -4,6 +4,8 @@ from pydantic import BaseModel
 from typing import Optional
 import pytest
 from cuid import cuid
+from fastapi import HTTPException
+
 
 client = TestClient(app)
 

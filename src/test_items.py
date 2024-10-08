@@ -1,6 +1,5 @@
 from fastapi.testclient import TestClient
-from app import app
-
+from fastapi import HTTPException
 from fastapi.testclient import TestClient
 from app import app, create_item, get_all, get_item, items
 from pydantic import BaseModel
