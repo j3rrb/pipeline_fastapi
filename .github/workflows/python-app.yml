@@ -35,7 +35,7 @@ jobs:
 
     - name: Rodando Testes
       run: |
-        pytest --cov=app tests/  # executa testes
+        pytest --cov=app src/  # executa testes
 
     - name: Atualizar Relatório de Cobertura
       if: always()
