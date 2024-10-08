@@ -6,7 +6,6 @@ import pytest
 from cuid import cuid
 from fastapi import HTTPException
 
-
 client = TestClient(app)
 
 def test_create_item():
