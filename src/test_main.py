@@ -9,6 +9,10 @@ from fastapi import HTTPException
 
 client = TestClient(app)
 
+class Item(BaseModel):
+    id: Optional[str] = None
+    name: str
+
 # Teste para criação de um item
 def test_create_item():
     items.clear()  # Limpa os itens antes do teste
