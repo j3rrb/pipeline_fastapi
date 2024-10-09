@@ -48,6 +48,12 @@ jobs:
         name: coverage-report
         path: htmlcov/
 
-    - name: Deploy no Vercel
-      run: |
-        curl -X POST "https://api.vercel.com/v1/integrations/deploy/prj_IhnNuLhlaZwE3mmnR0Eg0V4GJP3t/mwGm6CPNLE"
+  deploy:
+
+    runs-on: ubuntu-20.04
+  
+    needs: test  # Garante que o job de deploy só roda após o job de test
+    steps:
+      - name: Deploy no Vercel
+        run: |
+          curl -X POST "https://api.vercel.com/v1/integrations/deploy/prj_IhnNuLhlaZwE3mmnR0Eg0V4GJP3t/mwGm6CPNLE"
