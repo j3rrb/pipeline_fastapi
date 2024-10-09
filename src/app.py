@@ -22,14 +22,12 @@ items: List[Item] = []
 
 @app.post("/item")
 def create_item(item: Item):
-    exists = any(item.name == existing.name for existing in items)
+#    exists = any(item.name == existing.name for existing in items)
 
-    if exists:
-        raise HTTPException(409, "Item already exists!")
-        item.id = cuid() + 1
-    else:
-        item.id = cuid()
-
+ #   if exists:
+  #      raise HTTPException(409, "Item already exists!")
+        
+    item.id = cuid()
     items.append(item)
     return Response(status_code=200)
 
