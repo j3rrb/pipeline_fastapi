@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Response
 from pydantic import BaseModel
 from typing import List, Optional
 from cuid import cuid
+from fastapi.staticfiles import StaticFiles
 
 
 app = FastAPI()
