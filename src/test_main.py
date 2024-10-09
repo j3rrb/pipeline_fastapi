@@ -1,6 +1,5 @@
-import uvicorn
 from fastapi.testclient import TestClient
-from app import app, create_item, get_all, get_item, items
+from app import app, get_item, items
 from pydantic import BaseModel
 from typing import Optional
 import pytest
