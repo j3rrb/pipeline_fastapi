@@ -26,11 +26,11 @@ def create_item(item: Item):
 
     if exists:
         raise HTTPException(409, "Item already exists!")
-
-    item.id = cuid()
+        item.id = cuid() + 1
+    else:
+        item.id = cuid()
 
     items.append(item)
-
     return Response(status_code=200)
 
 @app.get("/item")
