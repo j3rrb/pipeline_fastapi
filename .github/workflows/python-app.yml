@@ -9,7 +9,7 @@ on:
       - main
   workflow_dispatch:  # botão de pipeline manual 
 
-jobs:pip install gunicorn
+jobs:
   test:
 
     runs-on: ubuntu-20.04 # estável
