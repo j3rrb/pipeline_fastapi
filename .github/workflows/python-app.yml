@@ -38,10 +38,9 @@ jobs:
         pytest --cov=app --cov-report=xml --cov-report=html
 
     - name: Ruff
-      ruff:
-      steps:
-        - uses: actions/checkout@v4
-        - uses: astral-sh/ruff-action@v1
+      uses: 
+        - actions/checkout@v4
+        - astral-sh/ruff-action@v1
       run: |
           ruff .
 
