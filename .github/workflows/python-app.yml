@@ -1,0 +1,45 @@
+name: Testing CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:  # botão de pipeline manual 
+
+jobs:
+  test:
+
+    runs-on: ubuntu-20.04 # estável
+
+    strategy:
+      matrix:
+        python-version: [3.9]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Instalando deependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install fastapi pydantic cuid pytest httpx
+        pip install pytest-cov  # relatório de cobertura de testes
+
+    - name: Rodando Testes
+      run: |
+        pytest --cov=app --cov-report=xml --cov-report=html
+
+    - name: Atualizar Relatório de Cobertura
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: htmlcov/
