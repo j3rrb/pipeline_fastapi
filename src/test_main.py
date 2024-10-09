@@ -9,16 +9,35 @@ from fastapi import HTTPException
 
 client = TestClient(app)
 
+# Teste para criação de um item
 def test_create_item():
+    items.clear()  # Limpa os itens antes do teste
     response = client.post("/item", json={"name": "TestItem"})
+    
+    # Verifica se a resposta foi 200 OK
     assert response.status_code == 200
+    assert len(items) == 1  # Verifica se o item foi adicionado
+    assert items[0].name == "TestItem"  # Verifica o nome do item
+    assert items[0].id is not None  # Verifica se o ID não é None
 
+# Teste para recuperar todos os itens
 def test_get_all_items():
-    response = client.get("/item")
-    assert response.status_code == 200
-    assert isinstance(response.json(), list)
+    items.clear()
+    items.append(Item(id=cuid(), name="TestItem1"))
+    items.append(Item(id=cuid(), name="TestItem2"))
 
+    response = client.get("/item")
+    
+    # Verifica se a resposta foi 200 OK
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)  # Verifica se a resposta é uma lista
+    assert len(response.json()) == 2  # Verifica se retornou 2 itens
+    assert response.json()[0]["name"] == "TestItem1"  # Verifica o nome do primeiro item
+    assert response.json()[1]["name"] == "TestItem2"  # Verifica o nome do segundo item
+
+# Teste para recuperar um item por ID
 def test_get_item_by_id():
+    items.clear()
     response = client.post("/item", json={"name": "TestItem42"})
     assert response.status_code == 200
     
@@ -26,50 +45,18 @@ def test_get_item_by_id():
     item_id = created_item["id"]
     
     response = client.get(f"/item/{item_id}")
+    
+    # Verifica se a resposta foi 200 OK e se o nome está correto
     assert response.status_code == 200
     assert response.json()["name"] == "TestItem42"
 
+# Teste para um item não encontrado
 def test_item_not_found():
     response = client.get("/item/invalid-id")
     assert response.status_code == 404
 
-class Item(BaseModel):
-    id: Optional[str] = None
-    name: str
-
-def test_create_item1():
-    items.clear()
-    
-    item_data = Item(name="TestItem")
-    response = create_item(item_data)
-
-    assert response.status_code == 200
-    assert len(items) == 1
-    assert items[0].name == "TestItem"
-    assert items[0].id is not None  
-
-def test_get_all_items1():
-    items.clear()
-    items.append(Item(id=cuid(), name="TestItem1"))
-    items.append(Item(id=cuid(), name="TestItem2"))
-
-    response = get_all()
-    
-    assert len(response) == 2
-    assert response[0].name == "TestItem1"
-    assert response[1].name == "TestItem2"
-
-
-def test_get_item_by_id1():
-    items.clear()
-    test_item = Item(id=cuid(), name="TestItem")
-    items.append(test_item)
-
-    response = get_item(test_item.id)
-    
-    assert response.name == test_item.name
-
-def test_item_not_found():
+# Teste para o tratamento de erro de item não encontrado usando a função diretamente
+def test_get_item_not_found_direct():
     items.clear()
 
     with pytest.raises(HTTPException) as exc_info:
@@ -77,3 +64,6 @@ def test_item_not_found():
     
     assert exc_info.value.status_code == 404
     assert exc_info.value.detail == "Item not found!"
+
+# Remover testes duplicados e não utilizados
+# A classe Item não precisa estar aqui novamente, pois já foi importada do módulo 'app'
