@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi.testclient import TestClient
 from app import app, create_item, get_all, get_item, items
 from pydantic import BaseModel
@@ -36,7 +37,7 @@ class Item(BaseModel):
     id: Optional[str] = None
     name: str
 
-def test_create_item():
+def test_create_item1():
     items.clear()
     
     item_data = Item(name="TestItem")
@@ -47,7 +48,7 @@ def test_create_item():
     assert items[0].name == "TestItem"
     assert items[0].id is not None  
 
-def test_get_all_items():
+def test_get_all_items1():
     items.clear()
     items.append(Item(id=cuid(), name="TestItem1"))
     items.append(Item(id=cuid(), name="TestItem2"))
@@ -59,7 +60,7 @@ def test_get_all_items():
     assert response[1].name == "TestItem2"
 
 
-def test_get_item_by_id():
+def test_get_item_by_id1():
     items.clear()
     test_item = Item(id=cuid(), name="TestItem")
     items.append(test_item)
