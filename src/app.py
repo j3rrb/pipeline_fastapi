@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="public", html=True), name="public")
+app.mount("/public", StaticFiles(directory="public", html=True), name="public")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=5049)
